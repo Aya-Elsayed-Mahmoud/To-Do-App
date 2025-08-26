@@ -10,7 +10,7 @@ class DefaultElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(
         label,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
