@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
 import 'package:todo_app/home_screen.dart';
+import 'package:todo_app/tabs/auth/register_screen.dart';
 import 'package:todo_app/tabs/tasks/tasks_provider.dart';
+
+import 'tabs/auth/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +32,8 @@ class ToDo extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         HomeScreen.routeName: (_) => HomeScreen(),
-
+        RegisterScreen.routeName: (_) => RegisterScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

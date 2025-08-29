@@ -5,7 +5,7 @@ import 'package:todo_app/tabs/tasks/add_task_bottom_sheet.dart';
 import 'package:todo_app/tabs/tasks/tasks_tab.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = "/";
+  static const String routeName = "/home";
 
   const HomeScreen({super.key});
 

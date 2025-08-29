@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+import 'package:todo_app/app_theme.dart';
+import 'package:todo_app/tabs/auth/register_screen.dart';
+import 'package:todo_app/tabs/tasks/default_elevated_button.dart';
+import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
+
+class LoginScreen extends StatefulWidget {
+  static const String routeName = '/login';
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Login',
+          style: TextStyle(
+            color: AppTheme.deepBlue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: AppTheme.deepBlue),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Card(
+              color: Colors.white.withOpacity(0.85),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(color: AppTheme.deepBlue.withOpacity(0.06)),
+              ),
+              elevation: 8,
+              shadowColor: AppTheme.deepBlue.withOpacity(0.12),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Welcome Back",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w800,
+                          color: AppTheme.deepBlue,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Login to continue",
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 28),
+
+                      // Email
+                      DefaultTextFormField(
+                        controller: emailController,
+                        hintText: 'Email',
+                        validator: (value) {
+                          if (value == null || value.trim().length < 5) {
+                            return 'Email cannot be less than 5 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 14),
+
+                      // Password
+                      DefaultTextFormField(
+                        isPassword: true,
+                        controller: passwordController,
+                        hintText: "Password",
+                        validator: (value) {
+                          if (value == null || value.trim().length < 8) {
+                            return 'Password cannot be less than 8 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Login Button
+                      DefaultElevatedButton(label: 'Login', onPressed: login),
+                      const SizedBox(height: 18),
+
+                      // Register Navigation
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
+                            style: TextStyle(color: Colors.grey.shade700),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(
+                                context,
+                              ).pushReplacementNamed(RegisterScreen.routeName);
+                            },
+                            child: const Text(
+                              "Register",
+                              style: TextStyle(
+                                color: AppTheme.deepBlue,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void login() {
+    if (formKey.currentState!.validate()) {}
+  }
+}
