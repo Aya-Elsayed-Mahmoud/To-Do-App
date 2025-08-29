@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -9,6 +8,8 @@ class AppTheme {
   static const Color grey = Color(0xFFC8C9CB);
   static const Color red = Color(0xFFEC4B4B);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF000000);
+
 
   static ThemeData lightTheme = ThemeData(
     primaryColor: primary,
@@ -27,7 +28,24 @@ class AppTheme {
       shape: CircleBorder(side: BorderSide(color: white, width: 4)),
       elevation: 0,
     ),
-    textTheme: TextTheme(),
+      textTheme: TextTheme(
+          titleMedium: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: primary
+          ),
+          titleSmall: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: black
+          )
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primary,
+          )
+      )
+
   );
   static ThemeData darkTheme = ThemeData();
 }
