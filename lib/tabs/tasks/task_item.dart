@@ -7,6 +7,8 @@ import 'package:todo_app/firebase_functions.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/tabs/tasks/tasks_provider.dart';
 
+import '../auth/user_provider.dart';
+
 class TaskItem extends StatefulWidget {
   TaskItem(this.task, {super.key});
   TaskModel task;
@@ -31,13 +33,20 @@ class _TaskItemState extends State<TaskItem> {
               icon: Icons.delete,
               label: 'Delete',
               borderRadius: BorderRadius.circular(15),
-              onPressed: (context) {
-                FirebaseFunctions.deleteTaskToFirestore(widget.task.id).
-                timeout(Duration(microseconds: 500),
-                    onTimeout: () {
+              onPressed: (_) {
+                FirebaseFunctions.deleteTaskToFirestore(widget.task.id,
+                  Provider
+                      .of<UserProvider>(context, listen: false)
+                      .currentUser!
+                      .id,
+                ).then((_) {
                       Provider
                           .of<TasksProvider>(context, listen: false)
-                          .getTasks();
+                          .getTasks(Provider
+                          .of<UserProvider>(context)
+                          .currentUser!
+                          .id,
+                      );
                       Fluttertoast.showToast(
                           msg: "Task delete successfully",
                           toastLength: Toast.LENGTH_SHORT,
@@ -104,9 +113,19 @@ class _TaskItemState extends State<TaskItem> {
                   setState(() {
                     widget.task.isDone = !widget.task.isDone;
                   });
-                  await FirebaseFunctions.updateTask(widget.task);
+                  await FirebaseFunctions.updateTask(widget.task,
+                    Provider
+                        .of<UserProvider>(context)
+                        .currentUser!
+                        .id,
+                  );
                   if (!mounted) return;
-                  Provider.of<TasksProvider>(context, listen: false).getTasks();
+                  Provider.of<TasksProvider>(context, listen: false).getTasks(
+                    Provider
+                        .of<UserProvider>(context)
+                        .currentUser!
+                        .id,
+                  );
                 },
                 child: widget.task.isDone
                     ? const Text(

@@ -1,11 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
+import 'package:todo_app/firebase_functions.dart';
 import 'package:todo_app/tabs/auth/login_screen.dart';
+import 'package:todo_app/tabs/auth/user_provider.dart';
 import 'package:todo_app/tabs/tasks/default_elevated_button.dart';
 import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
 
+import '../../home_screen.dart';
+
 class RegisterScreen extends StatefulWidget {
-  static const String routeName = '/';
+  static const String routeName = '/register';
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -170,7 +177,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void register() {
-    if (formKey.currentState!.validate()) {}
+  void register() async {
+    if (formKey.currentState!.validate()) {
+      final user = FirebaseFunctions.register(name: nameController.text,
+          email: emailController.text,
+          password: passwordController.text).then((user) {
+        Provider.of<UserProvider>(context, listen: false).updateUser(user);
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      }).catchError((error) {
+        String? message;
+        if (error is FirebaseAuthException) {
+          message = error.message;
+        }
+        Fluttertoast.showToast(
+            msg: "Something went wrong!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 5,
+            backgroundColor: AppTheme.red,
+            textColor: AppTheme.white,
+            fontSize: 16
+        );
+      });
+    };
   }
-}
+  }
+

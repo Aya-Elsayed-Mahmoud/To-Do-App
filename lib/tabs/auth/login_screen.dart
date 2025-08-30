@@ -1,11 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
 import 'package:todo_app/tabs/auth/register_screen.dart';
+import 'package:todo_app/tabs/auth/user_provider.dart';
 import 'package:todo_app/tabs/tasks/default_elevated_button.dart';
 import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
 
+import '../../firebase_functions.dart';
+import '../../home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
-  static const String routeName = '/login';
+  static const String routeName = '/';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -76,7 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         hintText: 'Email',
                         validator: (value) {
-                          if (value == null || value.trim().length < 5) {
+                          if (value == null || value
+                              .trim()
+                              .length < 5) {
                             return 'Email cannot be less than 5 characters';
                           }
                           return null;
@@ -90,7 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passwordController,
                         hintText: "Password",
                         validator: (value) {
-                          if (value == null || value.trim().length < 8) {
+                          if (value == null || value
+                              .trim()
+                              .length < 8) {
                             return 'Password cannot be less than 8 characters';
                           }
                           return null;
@@ -138,6 +149,28 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
-    if (formKey.currentState!.validate()) {}
+    if (formKey.currentState!.validate()) {
+      if (formKey.currentState!.validate()) {
+        FirebaseFunctions.login(
+            email: emailController.text,
+            password: passwordController.text).then((user) {
+          Provider.of<UserProvider>(context, listen: false).updateUser(user);
+          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        }).catchError((error) {
+          String? message;
+          if (error is FirebaseAuthException) {
+            message = error.message;
+          }
+          Fluttertoast.showToast(
+              msg: message ?? "Something went wrong!",
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 5,
+              backgroundColor: AppTheme.red,
+              textColor: AppTheme.white,
+              fontSize: 16
+          );
+        });
+      }
+    }
   }
 }
