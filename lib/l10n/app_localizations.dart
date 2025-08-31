@@ -98,11 +98,239 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
   /// No description provided for @todoList.
   ///
   /// In en, this message translates to:
-  /// **'ToDo List'**
+  /// **'To-Do List'**
   String get todoList;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @enterAValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email'**
+  String get enterAValidEmail;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @pleaseConfirmYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmYourPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @passwordMustBeAtLeast8Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMustBeAtLeast8Characters;
+
+  /// No description provided for @nameMustBeAtLeast3Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get nameMustBeAtLeast3Characters;
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get welcomeBack;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @taskDeleteSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Task deleted successfully'**
+  String get taskDeleteSuccessfully;
+
+  /// No description provided for @enterTaskDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter task description'**
+  String get enterTaskDescription;
+
+  /// No description provided for @descriptionCanNotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Description cannot be empty'**
+  String get descriptionCanNotBeEmpty;
+
+  /// No description provided for @createAnewAccountToGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new account to get started'**
+  String get createAnewAccountToGetStarted;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDate;
+
+  /// No description provided for @addNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new Task'**
+  String get addNewTask;
+
+  /// No description provided for @enterTaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter task title'**
+  String get enterTaskTitle;
+
+  /// No description provided for @titleCanNotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Title can not be empty'**
+  String get titleCanNotBeEmpty;
+
+  /// No description provided for @taskAddedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Task added successfully'**
+  String get taskAddedSuccessfully;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done!'**
+  String get done;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong!'**
+  String get somethingWentWrong;
+
+  /// No description provided for @editTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Task'**
+  String get editTask;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @taskUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Updated Successfully'**
+  String get taskUpdatedSuccessfully;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @arabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabic;
 }
 
 class _AppLocalizationsDelegate
