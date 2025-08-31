@@ -5,7 +5,7 @@ import 'package:todo_app/tabs/tasks/add_task_bottom_sheet.dart';
 import 'package:todo_app/tabs/tasks/tasks_tab.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = "/";
+  static const String routeName = "/home";
 
   const HomeScreen({super.key});
 
@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             showModalBottomSheet(context: context,
+                isScrollControlled: true,
                 builder: (_) => AddTaskBottomSheet()),
         child: const Icon(Icons.add, size: 32),
       ),

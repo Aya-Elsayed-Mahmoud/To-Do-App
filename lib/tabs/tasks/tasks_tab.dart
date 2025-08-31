@@ -5,10 +5,28 @@ import 'package:todo_app/app_theme.dart';
 import 'package:todo_app/tabs/tasks/task_item.dart';
 import 'package:todo_app/tabs/tasks/tasks_provider.dart';
 
-class TasksTab extends StatelessWidget {
+import '../../l10n/app_localizations.dart';
+import '../auth/user_provider.dart';
+
+class TasksTab extends StatefulWidget {
+  @override
+  State<TasksTab> createState() => _TasksTabState();
+}
+
+class _TasksTabState extends State<TasksTab> {
+  bool shouldGetTasks = true;
   @override
   Widget build(BuildContext context) {
+
     TasksProvider tasksProvider = Provider.of<TasksProvider>(context);
+    if (shouldGetTasks) {
+      tasksProvider.getTasks(Provider
+          .of<UserProvider>(context)
+          .currentUser!
+          .id,
+      );
+      shouldGetTasks = false;
+    }
     return Column(
         children: [
           Stack(children: [
@@ -25,7 +43,7 @@ class TasksTab extends StatelessWidget {
             PositionedDirectional(
               start: 20,
               top: 40,
-              child: Text('ToDo List',
+              child: Text(AppLocalizations.of(context)!.todoList,
                 style: Theme
                     .of(context)
                     .textTheme
@@ -45,7 +63,12 @@ class TasksTab extends StatelessWidget {
                 showTimelineHeader: false,
                 onDateChange: (selectedDate) {
                   tasksProvider.changeSelectedDate(selectedDate);
-                  tasksProvider.getTasks();
+                  tasksProvider.getTasks(
+                    Provider
+                        .of<UserProvider>(context)
+                        .currentUser!
+                        .id,
+                  );
                 },
                 activeColor: AppTheme.white,
                 dayProps: EasyDayProps(
