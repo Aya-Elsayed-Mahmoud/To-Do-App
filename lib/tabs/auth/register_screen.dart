@@ -10,6 +10,7 @@ import 'package:todo_app/tabs/tasks/default_elevated_button.dart';
 import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
 
 import '../../home_screen.dart';
+import '../../l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String routeName = '/register';
@@ -28,13 +29,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Create Account',
+        title: Text(
+          AppLocalizations.of(context)!.createAccount,
           style: TextStyle(
             color: AppTheme.deepBlue,
             fontWeight: FontWeight.bold,
@@ -61,8 +65,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "Welcome",
+                      Text(
+                        AppLocalizations.of(context)!.welcome,
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w800,
@@ -72,7 +76,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "Create a new account to get started",
+                        AppLocalizations.of(context)!
+                            .createAnewAccountToGetStarted,
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 14,
@@ -84,10 +89,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // Name
                       DefaultTextFormField(
                         controller: nameController,
-                        hintText: 'Name',
+                        hintText: AppLocalizations.of(context)!.name,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value.trim().length < 3) {
-                            return 'Name must be at least 3 characters';
+                            return AppLocalizations.of(context)!
+                                .nameMustBeAtLeast3Characters;
                           }
                           return null;
                         },
@@ -97,10 +106,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // Email
                       DefaultTextFormField(
                         controller: emailController,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context)!.email,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value.trim().length < 5) {
-                            return 'Enter a valid email';
+                            return AppLocalizations.of(context)!
+                                .enterAValidEmail;
                           }
                           return null;
                         },
@@ -111,10 +124,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       DefaultTextFormField(
                         isPassword: true,
                         controller: passwordController,
-                        hintText: "Password",
+                        hintText: AppLocalizations.of(context)!.password,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value.trim().length < 8) {
-                            return 'Password must be at least 8 characters';
+                            return AppLocalizations.of(context)!
+                                .passwordMustBeAtLeast8Characters;
                           }
                           return null;
                         },
@@ -125,10 +142,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       DefaultTextFormField(
                         isPassword: true,
                         controller: confirmPasswordController,
-                        hintText: "Confirm Password",
+                        hintText: AppLocalizations.of(context)!.confirmPassword,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please confirm your password';
+                            return AppLocalizations.of(context)!
+                                .pleaseConfirmYourPassword;
                           }
                           if (value != passwordController.text) {
                             return 'Passwords do not match';
@@ -138,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 24),
                       DefaultElevatedButton(
-                        label: 'Create Account',
+                        label: AppLocalizations.of(context)!.createAccount,
                         onPressed: register,
                       ),
 
@@ -147,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Already have an account? ",
+                            AppLocalizations.of(context)!.alreadyHaveAccount,
                             style: TextStyle(color: Colors.grey.shade700),
                           ),
                           GestureDetector(
@@ -156,8 +177,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 context,
                               ).pushReplacementNamed(LoginScreen.routeName);
                             },
-                            child: const Text(
-                              "Login",
+                            child: Text(
+                              AppLocalizations.of(context)!.login,
                               style: TextStyle(
                                 color: AppTheme.deepBlue,
                                 fontWeight: FontWeight.w700,

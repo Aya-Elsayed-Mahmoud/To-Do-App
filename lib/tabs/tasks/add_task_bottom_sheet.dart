@@ -8,6 +8,7 @@ import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/tabs/tasks/default_elevated_button.dart';
 import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
 import 'package:todo_app/tabs/tasks/tasks_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../auth/user_provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -26,6 +27,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery
           .of(context)
@@ -37,53 +42,73 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
             .size
             .height * 0.55,
         padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: isDark ? AppTheme.backgroundDark : AppTheme.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
         child: Form(
           key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Add new Task',
+                AppLocalizations.of(context)!.addNewTask,
                 style: Theme
-                    .of(
-                  context,
-                )
+                    .of(context)
                     .textTheme
                     .titleMedium
-                    ?.copyWith(color: AppTheme.black),
+                    ?.copyWith(
+                  color: isDark ? AppTheme.white : AppTheme.black,
+                ),
               ),
               const SizedBox(height: 16),
               DefaultTextFormField(
                 controller: titleController,
-                hintText: 'Enter task title',
+                hintText: AppLocalizations.of(context)!.enterTaskTitle,
                 validator: (value) {
                   if (value == null || value
                       .trim()
                       .isEmpty) {
-                    return 'Title can not be empty';
+                    return AppLocalizations.of(context)!.titleCanNotBeEmpty;
                   }
                   return null;
                 },
+                hintStyle: TextStyle(
+                  color: isDark ? AppTheme.white : AppTheme.black,
+                ),
               ),
               const SizedBox(height: 16),
               DefaultTextFormField(
                 controller: descriptionController,
-                hintText: 'Enter task description',
+                hintText: AppLocalizations.of(context)!.enterTaskDescription,
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value
                       .trim()
                       .isEmpty) {
-                    return 'Description can not be empty';
+                    return AppLocalizations.of(context)!
+                        .descriptionCanNotBeEmpty;
                   }
                   return null;
                 },
+                hintStyle: TextStyle(
+                  color: isDark ? AppTheme.white : AppTheme.black,
+                ),
               ),
               const SizedBox(height: 16),
-              Text('Select date', style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleSmall),
+              Text(
+                AppLocalizations.of(context)!.selectDate,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(
+                  color: isDark ? AppTheme.white : AppTheme.black,
+                ),
+              ),
               const SizedBox(height: 8),
               InkWell(
                 onTap: () async {
@@ -107,14 +132,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       .textTheme
                       .titleMedium
                       ?.copyWith(
+                    color: isDark ? AppTheme.white : AppTheme.black,
                     fontWeight: FontWeight.w500,
-                    color: AppTheme.black,
                   ),
                 ),
               ),
               const SizedBox(height: 32),
               DefaultElevatedButton(
-                label: 'Submit',
+                label: "submit",
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     addTask();
@@ -128,42 +153,41 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     );
   }
 
-  void addTask() {
-    FirebaseFunctions.addTaskToFirestore(
-        TaskModel(
-            title: titleController.text,
-            description: descriptionController.text,
-            date: selectedDate),
-      Provider
-          .of<UserProvider>(context)
+  Future<void> addTask() async {
+    try {
+      final userId = Provider
+          .of<UserProvider>(context, listen: false)
           .currentUser!
-          .id,
-    ).then((_) {
-          Navigator.of(context).pop();
-          Provider.of<TasksProvider>(context, listen: false).getTasks(Provider
-              .of<UserProvider>(context)
-              .currentUser!
-              .id,
-          );
-          Fluttertoast.showToast(
-              msg: "Task added successfully",
-              toastLength: Toast.LENGTH_SHORT,
-              timeInSecForIosWeb: 5,
-              backgroundColor: AppTheme.green,
-              textColor: AppTheme.white,
-              fontSize: 16
-          );
-        }
-    ).
-    catchError((_) {
-      Fluttertoast.showToast(
-          msg: "Something went wrong!",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 5,
-          backgroundColor: AppTheme.red,
-          textColor: AppTheme.white,
-          fontSize: 16
+          .id;
+
+      await FirebaseFunctions.addTaskToFirestore(
+        TaskModel(
+          title: titleController.text.trim(),
+          description: descriptionController.text.trim(),
+          date: selectedDate,
+        ),
+        userId,
       );
-    });
+
+      await Provider.of<TasksProvider>(context, listen: false).getTasks(userId);
+
+      Navigator.of(context).pop();
+
+      Fluttertoast.showToast(
+        msg: AppLocalizations.of(context)!.taskAddedSuccessfully,
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: AppTheme.green,
+        textColor: AppTheme.white,
+        fontSize: 16,
+      );
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Something went wrong!",
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: AppTheme.red,
+        textColor: AppTheme.white,
+        fontSize: 16,
+      );
+    }
   }
 }

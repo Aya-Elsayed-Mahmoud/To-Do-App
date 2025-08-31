@@ -10,6 +10,7 @@ import 'package:todo_app/tabs/tasks/default_text_form_field.dart';
 
 import '../../firebase_functions.dart';
 import '../../home_screen.dart';
+import '../../l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -25,13 +26,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Login',
+        title: Text(
+          AppLocalizations.of(context)!.login,
           style: TextStyle(
             color: AppTheme.deepBlue,
             fontWeight: FontWeight.bold,
@@ -58,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "Welcome Back",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.welcomeBack,
+                        style: const TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w800,
                           color: AppTheme.deepBlue,
@@ -81,7 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Email
                       DefaultTextFormField(
                         controller: emailController,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context)!.email,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value
                               .trim()
@@ -97,12 +104,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       DefaultTextFormField(
                         isPassword: true,
                         controller: passwordController,
-                        hintText: "Password",
+                        hintText: AppLocalizations.of(context)!.password,
+                        hintStyle: TextStyle(color:
+                        AppTheme.black,
+                        ),
                         validator: (value) {
                           if (value == null || value
                               .trim()
                               .length < 8) {
-                            return 'Password cannot be less than 8 characters';
+                            return AppLocalizations.of(context)!
+                                .passwordMustBeAtLeast8Characters;
                           }
                           return null;
                         },
@@ -110,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
 
                       // Login Button
-                      DefaultElevatedButton(label: 'Login', onPressed: login),
+                      DefaultElevatedButton(
+                          label: AppLocalizations.of(context)!.login,
+                          onPressed: login),
                       const SizedBox(height: 18),
 
                       // Register Navigation
@@ -118,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't have an account? ",
+                            AppLocalizations.of(context)!.dontHaveAccount,
                             style: TextStyle(color: Colors.grey.shade700),
                           ),
                           GestureDetector(
@@ -127,8 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                               ).pushReplacementNamed(RegisterScreen.routeName);
                             },
-                            child: const Text(
-                              "Register",
+                            child: Text(
+                              AppLocalizations.of(context)!.register,
                               style: TextStyle(
                                 color: AppTheme.deepBlue,
                                 fontWeight: FontWeight.w700,
@@ -170,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontSize: 16
           );
         });
-      }
+      };
     }
   }
 }
